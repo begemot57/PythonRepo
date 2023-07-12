@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 # Put in your reg here
 REGISTRATION = "201D13051"
 # Month for appointment: January, February, March etc.
-TARGET_MONTH = "June"
+TARGET_MONTH = "February"
 # Time in seconds between sending request to NCT page
 TIME_BETWEEN_RUNS: int = 5
 
@@ -15,7 +15,7 @@ TIME_BETWEEN_RUNS: int = 5
 need_to_accept_cookies = True
 
 options = Options()
-# options.add_argument('--headless')
+options.add_argument('--headless')
 
 # Create a new instance of the Chrome driver
 driver = webdriver.Chrome(options=options)
