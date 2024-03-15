@@ -3,23 +3,28 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 # Put in your reg here
-REGISTRATION = "201D13051"
+REGISTRATION = "12L1591"
 # Month for appointment: January, February, March etc.
-TARGET_MONTH = "February"
+TARGET_MONTH = "September"
 # Time in seconds between sending request to NCT page
 TIME_BETWEEN_RUNS: int = 5
+# Get chromedriver from here depending on your Chrome version:
+# https://googlechromelabs.github.io/chrome-for-testing/#stable
+# You need to unzip it, right click on chromedriver and hit "open" for your Mac to trust it
+DRIVER_PATH = "/Users/leonidioffe/Applications/ChromeApps/chromedriver-mac-arm64/chromedriver"
 
 # Only need to accept cookies first time we load the page
 need_to_accept_cookies = True
 
 options = Options()
 options.add_argument('--headless')
+service = Service(executable_path=DRIVER_PATH)
 
-# Create a new instance of the Chrome driver
-driver = webdriver.Chrome(options=options)
-
+# Create a new instance of the Chromedriver
+driver = webdriver.Chrome(service=service, options=options)
 
 # Boolean refresh_driver is True when we are looking for the first element
 # on the page and False for all the others, cause every refresh wipes all elements found so far
@@ -102,7 +107,7 @@ while True:
     if TARGET_MONTH.lower() in first_slot.lower():
         print("Found an appointment in target month '{}'.".format(TARGET_MONTH))
         # If found, run again and show the browser window
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(service=service)
         need_to_accept_cookies = True
         get_first_appointment_date()
         # Need to sleep long enough to book an appointment online - 600 seconds
