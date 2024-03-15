@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.service import Service
 # Put in your reg here
 REGISTRATION = "12L1591"
 # Month for appointment: January, February, March etc.
-TARGET_MONTH = "September"
+TARGET_MONTH = "March"
 # Time in seconds between sending request to NCT page
 TIME_BETWEEN_RUNS: int = 5
 # Get chromedriver from here depending on your Chrome version:
@@ -100,10 +100,11 @@ def get_first_appointment_date():
     slot = find_element_by_selector("input[name='SelectedBookingDay'][id='0']", "CSS_SELECTOR", True)
     return slot.get_attribute("value")
 
-
+count = 1
 while True:
     first_slot = get_first_appointment_date()
-    print("first_slot: " + first_slot)
+    print(f"{count} - first_slot: {first_slot}")
+    count += 1
     if TARGET_MONTH.lower() in first_slot.lower():
         print("Found an appointment in target month '{}'.".format(TARGET_MONTH))
         # If found, run again and show the browser window
